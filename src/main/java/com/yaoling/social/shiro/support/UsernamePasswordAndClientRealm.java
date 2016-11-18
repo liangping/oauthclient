@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.zrk.oauthclient.shiro.support;
+package com.yaoling.social.shiro.support;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,8 +39,6 @@ import org.pac4j.core.exception.TechnicalException;
 import org.pac4j.core.profile.CommonProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.zrk.oauthclient.shiro.support.UsernamePasswordAndClientToken.TokenType;
 
 /**
  * 支持用户名密码登陆和第三方登陆使用
@@ -68,7 +66,7 @@ public abstract class UsernamePasswordAndClientRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken) throws AuthenticationException {
         	UsernamePasswordAndClientToken passwordAndClientToken = (UsernamePasswordAndClientToken)authenticationToken;
-        	if(passwordAndClientToken.getTokenType()==TokenType.CLIENT)
+        	if(passwordAndClientToken.getTokenType()== UsernamePasswordAndClientToken.TokenType.CLIENT)
         		return internalClientGetAuthenticationInfo(authenticationToken);	//第三方登录认证
         	else
         		return internalUsernamePasswordGetAuthenticationInfo(authenticationToken);//用户名密码登录认证

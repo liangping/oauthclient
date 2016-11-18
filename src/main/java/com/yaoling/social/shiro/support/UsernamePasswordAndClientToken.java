@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.zrk.oauthclient.shiro.support;
+package com.yaoling.social.shiro.support;
 
 import java.util.Arrays;
 
