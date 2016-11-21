@@ -1,8 +1,8 @@
 package com.yaoling.social.profile;
 
-import com.yaoling.social.definition.SinaWeiboAttributesDefinition;
-import org.pac4j.core.profile.AttributesDefinition;
 import org.pac4j.oauth.profile.OAuth20Profile;
+
+import com.yaoling.social.definition.SinaWeiboAttributesDefinition;
 
 /**
  * 微博用户信息
@@ -12,12 +12,6 @@ import org.pac4j.oauth.profile.OAuth20Profile;
 public class SinaWeiboProfile extends OAuth20Profile implements ClientProfile{
 
 	private static final long serialVersionUID = -7486869356444327783L;
-
-	@Override
-	protected AttributesDefinition getAttributesDefinition() {
-		return new SinaWeiboAttributesDefinition();
-	}
-
 
 	public String getOpenid() {
 		return (String)getAttribute(SinaWeiboAttributesDefinition.IDSTR);

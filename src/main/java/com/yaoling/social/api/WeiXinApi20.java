@@ -1,15 +1,14 @@
 package com.yaoling.social.api;
 
-import org.pac4j.oauth.profile.JsonHelper;
-import org.scribe.builder.api.DefaultApi20;
-import org.scribe.exceptions.OAuthException;
-import org.scribe.extractors.AccessTokenExtractor;
-import org.scribe.model.OAuthConfig;
-import org.scribe.model.Token;
-import org.scribe.utils.OAuthEncoder;
-import org.scribe.utils.Preconditions;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.github.scribejava.core.builder.api.DefaultApi20;
+import com.github.scribejava.core.extractors.TokenExtractor;
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.github.scribejava.core.model.OAuthConfig;
+import com.github.scribejava.core.oauth.OAuth20Service;
+import com.github.scribejava.core.utils.OAuthEncoder;
+import com.github.scribejava.core.utils.Preconditions;
+import com.yaoling.social.api.service.WeiXinOAuth20ServiceImpl;
 
 /**
  * 微信登录api
@@ -17,8 +16,13 @@ import com.fasterxml.jackson.databind.JsonNode;
  * @date 2016年4月15日 下午5:41:56
  */
 public class WeiXinApi20 extends DefaultApi20 {
-	private static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/qrconnect?response_type=code&appid=%s&redirect_uri=%s";
-	private static final String SCOPED_AUTHORIZE_URL = AUTHORIZE_URL + "&scope=%s";
+	//private static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/qrconnect?response_type=code&appid=%s&redirect_uri=%s";
+	private static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=#wechat_redirect";
+
+	protected WeiXinApi20() {
+	}
+	
+	public static WeiXinApi20 INSTANCE = new WeiXinApi20();
 
 	@Override
 	public String getAccessTokenEndpoint() {
@@ -30,29 +34,18 @@ public class WeiXinApi20 extends DefaultApi20 {
 		Preconditions.checkValidUrl(config.getCallback(),
 				"Must provide a valid url as callback. 	WeiXin does not support OOB");
 
-		// Append scope if present
-		if (config.hasScope()) {
-			return String.format(SCOPED_AUTHORIZE_URL, config.getApiKey(), OAuthEncoder.encode(config.getCallback()),
-					OAuthEncoder.encode(config.getScope()));
-		} else {
-			return String.format(AUTHORIZE_URL, config.getApiKey(), OAuthEncoder.encode(config.getCallback()));
-		}
+		return String.format(AUTHORIZE_URL, config.getApiKey(), OAuthEncoder.encode(config.getCallback()),OAuthEncoder.encode(config.hasScope()?config.getScope():"snsapi_base"));
+	
 	}
+
 	@Override
-	public AccessTokenExtractor getAccessTokenExtractor() {
-		return new AccessTokenExtractor() {
-			private static final String EMPTY_SECRET = "";
-			@Override
-			public Token extract(String response) {
-				Preconditions.checkEmptyString(response,"Response body is incorrect. Can't extract a token from an empty string");
-				final JsonNode json = JsonHelper.getFirstNode(response);  
-				String token = (String) JsonHelper.get(json, "access_token");
-				if (token != null && !"".equals(token)) {
-					return new Token(token, EMPTY_SECRET, response);
-				} else {
-					throw new OAuthException("Response body is incorrect. Can't extract a token from this: '" + response + "'", null);
-				}
-			}
-		};
+	public TokenExtractor<OAuth2AccessToken> getAccessTokenExtractor() {
+		return super.getAccessTokenExtractor();
 	}
+
+	@Override
+	public OAuth20Service createService(OAuthConfig config) {
+		return new WeiXinOAuth20ServiceImpl(this, config);
+	}
+	
 }

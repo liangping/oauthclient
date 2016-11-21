@@ -1,9 +1,10 @@
 package com.yaoling.social.profile;
 
 
-import com.yaoling.social.definition.WeiXinAttributesDefinition;
 import org.pac4j.core.profile.AttributesDefinition;
 import org.pac4j.oauth.profile.OAuth20Profile;
+
+import com.yaoling.social.definition.WeiXinAttributesDefinition;
 
 /**
  * 微信用户信息
@@ -12,12 +13,12 @@ import org.pac4j.oauth.profile.OAuth20Profile;
  */
 public class WeiXinProfile extends OAuth20Profile implements ClientProfile{
 
-	private static final long serialVersionUID = -7486869356444327782L;
-	
 	@Override
-	protected AttributesDefinition getAttributesDefinition() {
-		return new WeiXinAttributesDefinition();
+	public String getId() {
+		// TODO Auto-generated method stub
+		return super.getId();
 	}
+	private static final long serialVersionUID = -7486869356444327782L;
 	
 	public String getOpenid() {
 		return (String)getAttribute(WeiXinAttributesDefinition.OPEN_ID);
@@ -31,6 +32,11 @@ public class WeiXinProfile extends OAuth20Profile implements ClientProfile{
 	}
 	public String getIcon(){
 		return(String)getAttribute(WeiXinAttributesDefinition.HEADIMGURL);
+	}
+
+	@Override
+	public AttributesDefinition getAttributesDefinition() {
+		return new WeiXinAttributesDefinition();
 	}
 
 }

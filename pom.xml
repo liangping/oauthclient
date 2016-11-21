@@ -14,23 +14,26 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<pac4jVersion>1.9.4</pac4jVersion>
+		<bujiVersion>2.0.3</bujiVersion>
 	</properties>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.scribe</groupId>
-            <artifactId>scribe</artifactId>
-            <version>1.3.7</version>
-        </dependency>
-	    <dependency>
-	      <groupId>org.apache.shiro</groupId>
-	      <artifactId>shiro-web</artifactId>
-	      <version>1.2.4</version>
-	    </dependency>
+		<!-- PAC4j -->
+		<dependency>
+			<groupId>io.buji</groupId>
+			<artifactId>buji-pac4j</artifactId>
+			<version>${bujiVersion}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.pac4j</groupId>
 			<artifactId>pac4j-oauth</artifactId>
-			<version>1.8.7</version>
+			<version>${pac4jVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-http</artifactId>
+			<version>${pac4jVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

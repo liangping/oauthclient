@@ -1,14 +1,14 @@
 package com.yaoling.social.definition;
 
+import org.pac4j.core.profile.AttributesDefinition;
 import org.pac4j.core.profile.converter.Converters;
-import org.pac4j.oauth.profile.OAuthAttributesDefinition;
 
 /**
  * 返回数据转化器
  * @author zrk  
  * @date 2016年4月15日 下午5:43:38
  */
-public class SinaWeiboAttributesDefinition extends OAuthAttributesDefinition {
+public class SinaWeiboAttributesDefinition extends AttributesDefinition {
 
 	public static final String ID = "id"; 									//用户UID 后被绑定为数据库业务id
 	public static final String IDSTR = "idstr";								//字符串型的用户UID 
@@ -21,14 +21,14 @@ public class SinaWeiboAttributesDefinition extends OAuthAttributesDefinition {
 	public static final String AVATAR_HD    = "avatar_hd";					//用户头像地址（高清），高清头像原图 
 
 	public SinaWeiboAttributesDefinition() {
-		addAttribute(ID, Converters.longConverter);
-		addAttribute(IDSTR, Converters.stringConverter);
-		addAttribute(SCREEN_NAME, Converters.stringConverter);
-		addAttribute(NAME, Converters.stringConverter);
-		addAttribute(GENDER, Converters.stringConverter);
-		addAttribute(LOCATION, Converters.stringConverter);
-		addAttribute(PROFILE_IMAGE_URL, Converters.stringConverter);
-		addAttribute(AVATAR_LARGE, Converters.stringConverter);
-		addAttribute(AVATAR_HD, Converters.stringConverter);
+		primary(ID, Converters.LONG);
+		primary(IDSTR, Converters.STRING);
+		primary(SCREEN_NAME, Converters.STRING);
+		primary(NAME, Converters.STRING);
+		primary(GENDER, Converters.STRING);
+		primary(LOCATION, Converters.STRING);
+		primary(PROFILE_IMAGE_URL, Converters.STRING);
+		primary(AVATAR_LARGE, Converters.STRING);
+		primary(AVATAR_HD, Converters.STRING);
 	}
 }

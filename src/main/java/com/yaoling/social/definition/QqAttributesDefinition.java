@@ -1,14 +1,14 @@
 package com.yaoling.social.definition;
 
+import org.pac4j.core.profile.AttributesDefinition;
 import org.pac4j.core.profile.converter.Converters;
-import org.pac4j.oauth.profile.OAuthAttributesDefinition;
 
 /**
  * 返回数据转化器
  * @author zrk  
  * @date 2016年4月15日 下午5:43:17
  */
-public class QqAttributesDefinition extends OAuthAttributesDefinition {
+public class QqAttributesDefinition extends AttributesDefinition {
 
 	public static final String ID = "id";							//id。数据库业务id
 	public static final String OPEN_ID = "openid";					//openid。
@@ -20,14 +20,14 @@ public class QqAttributesDefinition extends OAuthAttributesDefinition {
 	public static final String FIGUREURL_QQ_2 = "figureurl_qq_2";	//大小为100×100像素的QQ头像URL 不是所有的用户都拥有QQ的100x100的头像，但40x40像素则是一定会有
 
 	public QqAttributesDefinition() {
-		addAttribute(ID, Converters.longConverter);
-		addAttribute(OPEN_ID, Converters.stringConverter);
-		addAttribute(NICK_NAME, Converters.stringConverter);
-		addAttribute(GENDER, Converters.stringConverter);
-		addAttribute(PROVINCE, Converters.stringConverter);
-		addAttribute(CITY, Converters.stringConverter);
-		addAttribute(FIGUREURL_QQ_1, Converters.stringConverter);
-		addAttribute(FIGUREURL_QQ_2, Converters.stringConverter);
+		primary(ID, Converters.LONG);
+		primary(OPEN_ID, Converters.STRING);
+		primary(NICK_NAME, Converters.STRING);
+		primary(GENDER, Converters.STRING);
+		primary(PROVINCE, Converters.STRING);
+		primary(CITY, Converters.STRING);
+		primary(FIGUREURL_QQ_1, Converters.STRING);
+		primary(FIGUREURL_QQ_2, Converters.STRING);
 	}
 //	{
 //	    "ret": 0,
